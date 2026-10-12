@@ -1,0 +1,9 @@
+.git
+.runtime
+data
+node_modules
+.env*
+config.json
+docs/demo
+__pycache__
+*.pyc

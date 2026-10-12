@@ -1,0 +1,38 @@
+name: Tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: python -m unittest discover -s tests -v
+      - uses: actions/setup-node@v4
+        with: {node-version: "22", cache: npm}
+      - run: npm ci
+      - run: node --check static/app.js && node --check scripts/capture.mjs && node --check scripts/e2e.mjs
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: "22", cache: npm}
+      - run: npm ci && npx playwright install --with-deps chromium
+      - run: docker compose up --build -d
+      - name: Wait for the agent
+        run: |
+          for i in $(seq 1 90); do
+            if curl --fail --silent http://127.0.0.1:8787/healthz; then exit 0; fi
+            sleep 2
+          done
+          docker compose logs
+          exit 1
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: demo-evidence, path: docs/demo}
+      - run: docker compose logs && docker compose down
+        if: always()

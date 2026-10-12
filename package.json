@@ -1,0 +1,14 @@
+{
+  "name": "grafana-panel-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Detect missing Grafana panel data, review exact repairs, and verify recovery.",
+  "type": "module",
+  "scripts": {
+    "demo": "python3 scripts/demo.py",
+    "test": "python3 -m unittest discover -s tests -v",
+    "test:e2e": "node scripts/e2e.mjs"
+  },
+  "engines": {"node": ">=20"},
+  "dependencies": {"playwright": "1.62.1"}
+}

@@ -1,0 +1,54 @@
+{
+  "id": null,
+  "uid": "guardian-checkout",
+  "title": "Checkout · Production",
+  "tags": ["production", "guardian-demo"],
+  "timezone": "browser",
+  "schemaVersion": 40,
+  "version": 0,
+  "editable": true,
+  "refresh": "5s",
+  "time": {"from": "now-5m", "to": "now"},
+  "templating": {
+    "list": [
+      {"name": "service", "label": "Service", "type": "constant", "query": "checkout", "current": {"text": "checkout", "value": "checkout"}, "hide": 0},
+      {"name": "environment", "label": "Environment", "type": "constant", "query": "prod", "current": {"text": "prod", "value": "prod"}, "hide": 0}
+    ]
+  },
+  "panels": [
+    {
+      "id": 1, "type": "stat", "title": "Checkout queue depth",
+      "description": "Pending checkout jobs. This panel expects continuous data; an empty result is a monitoring failure.",
+      "gridPos": {"h": 7, "w": 8, "x": 0, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "guardian-prometheus"},
+      "targets": [{"refId": "A", "expr": "guardian_checkout_queue_depth{app=\"$service\",environment=\"$environment\"}", "instant": true, "range": false}],
+      "fieldConfig": {"defaults": {"unit": "short", "decimals": 0, "color": {"mode": "fixed", "fixedColor": "orange"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]}}, "overrides": []},
+      "options": {"reduceOptions": {"values": false, "calcs": ["lastNotNull"], "fields": ""}, "orientation": "auto", "textMode": "value", "text": {"valueSize": 96}, "wideLayout": true, "colorMode": "value", "graphMode": "none", "justifyMode": "center"}
+    },
+    {
+      "id": 2, "type": "stat", "title": "Checkout request rate",
+      "gridPos": {"h": 7, "w": 8, "x": 8, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "guardian-prometheus"},
+      "targets": [{"refId": "A", "expr": "rate(guardian_http_requests_total{service=\"$service\",environment=\"$environment\"}[1m])", "instant": true, "range": false}],
+      "fieldConfig": {"defaults": {"unit": "reqps", "decimals": 1, "color": {"mode": "fixed", "fixedColor": "green"}}, "overrides": []},
+      "options": {"reduceOptions": {"values": false, "calcs": ["lastNotNull"], "fields": ""}, "textMode": "value", "colorMode": "value", "graphMode": "none", "justifyMode": "center"}
+    },
+    {
+      "id": 3, "type": "stat", "title": "Checkout latency",
+      "gridPos": {"h": 7, "w": 8, "x": 16, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "guardian-prometheus"},
+      "targets": [{"refId": "A", "expr": "guardian_checkout_latency_seconds{service=\"$service\",environment=\"$environment\"}", "instant": true, "range": false}],
+      "fieldConfig": {"defaults": {"unit": "s", "decimals": 3, "color": {"mode": "fixed", "fixedColor": "blue"}}, "overrides": []},
+      "options": {"reduceOptions": {"values": false, "calcs": ["lastNotNull"], "fields": ""}, "textMode": "value", "colorMode": "value", "graphMode": "none", "justifyMode": "center"}
+    },
+    {
+      "id": 4, "type": "timeseries", "title": "Checkout errors · empty is expected",
+      "description": "The demo emits no errors. An explicit allow_empty contract keeps this panel out of the incident queue.",
+      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 7},
+      "datasource": {"type": "prometheus", "uid": "guardian-prometheus"},
+      "targets": [{"refId": "A", "expr": "rate(guardian_checkout_errors_total{service=\"$service\",environment=\"$environment\"}[1m])", "instant": false, "range": true}],
+      "fieldConfig": {"defaults": {"unit": "reqps"}, "overrides": []},
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}, "tooltip": {"mode": "single"}}
+    }
+  ]
+}

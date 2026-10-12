@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Grafana Panel Agent · Monitoring health</title>
+  <link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#health"><span class="brand-mark">◉</span><span>Panel Agent<small>FOR GRAFANA</small></span></a>
+    <span class="nav-label">WORKSPACE</span>
+    <nav aria-label="Main navigation">
+      <button class="nav active" data-view="health"><span>▦</span>Dashboard health</button>
+      <button class="nav" data-view="review"><span>◇</span>Review queue <b id="queue-count">0</b></button>
+      <button class="nav" data-view="history"><span>↺</span>RCA history</button>
+      <button class="nav" data-view="about"><span>⚙</span>How it works</button>
+    </nav>
+    <div class="sidebar-footer"><span class="connected-dot"></span><span id="connection-label">Connecting to agent…</span><small>v0.1.0 · Open source</small></div>
+  </aside>
+  <main>
+    <header class="topbar"><span>Workspace <span class="slash">/</span> <strong id="breadcrumb">Dashboard health</strong></span><div class="top-actions"><span id="mode" class="pill">Connecting</span><span class="avatar">PA</span></div></header>
+    <div class="workspace">
+      <div id="demo-banner" class="demo-banner" hidden><span><b>LIVE DEMO</b> Real Grafana + Prometheus. Synthetic checkout telemetry.</span><button id="reset-demo" class="text-button">Reset demo ↺</button></div>
+      <section id="login" class="login-card" hidden><h1>Open your workspace</h1><p>Enter the reviewer token configured on this agent.</p><form id="login-form"><label for="token">Review token</label><input id="token" type="password" autocomplete="off" required><button class="button primary">Sign in</button></form></section>
+      <div id="app" hidden>
+        <div class="page-heading"><div><span class="eyebrow">OBSERVABILITY RELIABILITY</span><h1 id="page-title">Monitoring your monitoring.</h1><p id="page-subtitle">Find missing telemetry. Review the evidence. Restore confidence.</p></div><div class="heading-actions"><button id="simulate" class="button warning" hidden>Simulate label migration</button><button id="scan" class="button secondary">↻ Scan now</button></div></div>
+        <div id="operation" class="operation" role="status" hidden></div>
+        <div id="toast" role="alert" hidden></div>
+        <section id="metrics" class="metrics"></section>
+        <section id="health-view">
+          <div class="section-header"><h2>Dashboard coverage <span id="coverage-count" class="count"></span></h2><span class="subtle" id="last-scan">Waiting for first scan</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Panel</th><th>Dashboard / context</th><th>Health</th><th>Last checked</th><th></th></tr></thead><tbody id="checks"></tbody></table></div>
+          <div class="section-header"><h2>Latest investigations</h2><button class="text-button" id="view-reviews">View review queue →</button></div>
+          <div id="incident-cards" class="incident-cards"></div>
+          <div class="info-strip"><span>◇</span><div><b>Every repair starts with your review.</b><p>The agent tests queries and proposes an exact patch. Changes require approval and pass recovery checks.</p></div></div>
+        </section>
+        <section id="review-view" hidden><div class="review-layout"><div id="incident-list" class="incident-list"></div><article id="incident-detail" class="incident-detail"></article></div></section>
+        <section id="history-view" hidden><div id="history-list" class="history-list"></div></section>
+        <section id="about-view" hidden class="about-card"><h2>From a missing panel to a verified repair</h2><ol><li><b>Check.</b> The scheduler inventories dashboards and evaluates each supported query in its configured context.</li><li><b>Investigate.</b> Collect the original response, an actual Grafana screenshot, change context and live candidate tests.</li><li><b>Review.</b> Inspect the query diff. Approve this exact proposal, reject it, or repair the dashboard yourself.</li><li><b>Verify.</b> The agent checks the saved revision and repeats the panel contract against fresh evaluations.</li><li><b>Learn.</b> Save evidence, decisions, recovery results and prevention recommendations in an RCA.</li></ol><h3>Supported in this release</h3><p>Standard Grafana dashboards with explicit Prometheus data-source UIDs, ordinary queries and resolved variables. Library panels, transformations, repeated panels, time overrides and other data sources are explicitly unverified.</p><h3>Diagnosis mode</h3><p id="advisor-mode"></p><p>Only a unique, configured semantic label migration that passes the live contract becomes an executable patch. Other model suggestions remain advisory. Source-sample freshness can be enforced with a raw-selector contract.</p><h3>Demo fault</h3><p>The checkout exporter moves the <code>app</code> label to <code>service</code>. The queue-depth panel still selects <code>app="checkout"</code> and shows “No data.” The proposed repair preserves both the checkout service and production environment.</p></section>
+      </div>
+    </div>
+  </main>
+  <dialog id="approval-dialog"><form id="approval-form"><span class="eyebrow">HUMAN REVIEW</span><h2>Apply this dashboard repair?</h2><p>The approval covers only the displayed query patch and its dashboard revision. The agent will verify recovery after saving.</p><div id="approval-diff" class="diff"></div><label for="approval-note">Reviewer note (optional)</label><textarea id="approval-note" rows="3" placeholder="Reviewed the service and environment filters."></textarea><div class="dialog-actions"><button id="cancel-approval" type="button" class="button secondary">Keep reviewing</button><button class="button primary" type="submit">Approve and apply</button></div></form></dialog>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "grafana_url": "http://127.0.0.1:3000",
+  "grafana_user": "admin",
+  "grafana_password": "local-demo-only",
+  "data_dir": ".runtime/guardian",
+  "tags": ["guardian-demo"],
+  "contexts": {"guardian-checkout": [{"service": "checkout", "environment": "prod"}]},
+  "contracts": {
+    "guardian-checkout:1": {"expect_data": true, "owner": "Checkout team", "expected_labels": [{"environment": "prod"}], "scrape_selector": "up{job=\"checkout\"}"},
+    "guardian-checkout:2": {"expect_data": true, "owner": "Checkout team"},
+    "guardian-checkout:3": {"expect_data": true, "owner": "Checkout team"},
+    "guardian-checkout:4": {"allow_empty": true, "owner": "Checkout team"}
+  },
+  "label_migrations": {"app": "service"},
+  "scan_interval_seconds": 30,
+  "consecutive_failures": 1,
+  "window_seconds": 300,
+  "step_seconds": 2,
+  "demo": true,
+  "exporter_url": "http://127.0.0.1:9109",
+  "changes_url": "http://127.0.0.1:9109/changes",
+  "screenshot_mode": "playwright"
+}

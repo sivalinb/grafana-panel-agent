@@ -1,0 +1,330 @@
+{
+  "id": "03e665d0b151",
+  "fingerprint": "7c3e30aca2dc6fc82379119a3b53b2664805b3624993b5dbd86cf7132e240031",
+  "status": "resolved",
+  "created_at": "2026-10-12T02:13:20.164+00:00",
+  "dashboard_uid": "guardian-checkout",
+  "dashboard_title": "Checkout · Production",
+  "panel_id": 1,
+  "panel_title": "Checkout queue depth",
+  "context": {
+    "service": "checkout",
+    "environment": "prod"
+  },
+  "contract": {
+    "expect_data": true,
+    "owner": "Checkout team",
+    "expected_labels": [
+      {
+        "environment": "prod"
+      }
+    ],
+    "scrape_selector": "up{job=\"checkout\"}"
+  },
+  "owner": "Checkout team",
+  "observed": {
+    "state": "empty",
+    "queries": [
+      {
+        "state": "empty",
+        "series": 0,
+        "points": 0,
+        "labels": [],
+        "last_timestamp_ms": null,
+        "query": "guardian_checkout_queue_depth{app=\"checkout\",environment=\"prod\"}",
+        "ref_id": "A",
+        "from_ms": 1791770900158,
+        "to_ms": 1791771200158,
+        "datasource_uid": "guardian-prometheus"
+      }
+    ]
+  },
+  "dashboard_version": 7,
+  "dashboard_hash": "93ca5e8c24b0123c01cc19bf652c3f89728dea9eeeebb28b75ce8661c81a56ef",
+  "folder_uid": "",
+  "panel_url": "http://127.0.0.1:3000/d/guardian-checkout/guardian?orgId=1&from=1791770900164&to=1791771200164&theme=dark&viewPanel=1&var-service=checkout&var-environment=prod",
+  "evidence": [
+    {
+      "id": "e1",
+      "title": "Original query evaluation",
+      "data": {
+        "state": "empty",
+        "queries": [
+          {
+            "state": "empty",
+            "series": 0,
+            "points": 0,
+            "labels": [],
+            "last_timestamp_ms": null,
+            "query": "guardian_checkout_queue_depth{app=\"checkout\",environment=\"prod\"}",
+            "ref_id": "A",
+            "from_ms": 1791770900158,
+            "to_ms": 1791771200158,
+            "datasource_uid": "guardian-prometheus"
+          }
+        ]
+      }
+    },
+    {
+      "id": "e2",
+      "title": "Recent changes (context, not proof by itself)",
+      "data": [
+        {
+          "at": "2026-10-12T02:11:47.655728+00:00",
+          "service": "checkout",
+          "environment": "prod",
+          "deployment": "checkout-exporter-v1",
+          "change": "Restored app label for synthetic demo"
+        },
+        {
+          "at": "2026-10-12T02:11:53.156487+00:00",
+          "service": "checkout",
+          "environment": "prod",
+          "deployment": "checkout-exporter-v2",
+          "change": "Queue-depth label renamed from app to service"
+        },
+        {
+          "at": "2026-10-12T02:13:11.606221+00:00",
+          "service": "checkout",
+          "environment": "prod",
+          "deployment": "checkout-exporter-v1",
+          "change": "Restored app label for synthetic demo"
+        },
+        {
+          "at": "2026-10-12T02:13:17.121644+00:00",
+          "service": "checkout",
+          "environment": "prod",
+          "deployment": "checkout-exporter-v2",
+          "change": "Queue-depth label renamed from app to service"
+        }
+      ]
+    },
+    {
+      "id": "e3",
+      "title": "Metric type and help text",
+      "data": {
+        "metric": "guardian_checkout_queue_depth",
+        "metadata": [
+          {
+            "type": "gauge",
+            "unit": "",
+            "help": "Pending synthetic checkout jobs."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4",
+      "title": "Live scrape target health",
+      "data": [
+        {
+          "metric": {
+            "__name__": "up",
+            "instance": "127.0.0.1:9109",
+            "job": "checkout"
+          },
+          "value": [
+            1791771202.854,
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e5",
+      "title": "Live candidate test: app → service",
+      "data": {
+        "state": "healthy",
+        "queries": [
+          {
+            "state": "healthy",
+            "series": 1,
+            "points": 1,
+            "labels": [
+              {
+                "__name__": "guardian_checkout_queue_depth",
+                "environment": "prod",
+                "instance": "127.0.0.1:9109",
+                "job": "checkout",
+                "service": "checkout"
+              }
+            ],
+            "last_timestamp_ms": 1791771202859,
+            "query": "guardian_checkout_queue_depth{service=\"checkout\",environment=\"prod\"}",
+            "ref_id": "A",
+            "from_ms": 1791770902859,
+            "to_ms": 1791771202859,
+            "datasource_uid": "guardian-prometheus"
+          }
+        ]
+      }
+    }
+  ],
+  "proposal": {
+    "dashboard_uid": "guardian-checkout",
+    "panel_id": 1,
+    "dashboard_version": 7,
+    "dashboard_hash": "93ca5e8c24b0123c01cc19bf652c3f89728dea9eeeebb28b75ce8661c81a56ef",
+    "context": {
+      "service": "checkout",
+      "environment": "prod"
+    },
+    "contract_hash": "bfb2681ceb2e39ba8c895c882b4e9695dac04f01fb914c0868d70119116bc01d",
+    "target_index": 0,
+    "ref_id": "A",
+    "before": "guardian_checkout_queue_depth{app=\"$service\",environment=\"$environment\"}",
+    "after": "guardian_checkout_queue_depth{service=\"$service\",environment=\"$environment\"}",
+    "label_before": "app",
+    "label_after": "service",
+    "validation": {
+      "state": "healthy",
+      "queries": [
+        {
+          "state": "healthy",
+          "series": 1,
+          "points": 1,
+          "labels": [
+            {
+              "__name__": "guardian_checkout_queue_depth",
+              "environment": "prod",
+              "instance": "127.0.0.1:9109",
+              "job": "checkout",
+              "service": "checkout"
+            }
+          ],
+          "last_timestamp_ms": 1791771202859,
+          "query": "guardian_checkout_queue_depth{service=\"checkout\",environment=\"prod\"}",
+          "ref_id": "A",
+          "from_ms": 1791770902859,
+          "to_ms": 1791771202859,
+          "datasource_uid": "guardian-prometheus"
+        }
+      ]
+    },
+    "hash": "5e349154f634b12a42fbc3fa7efac87b49fc444be81af4be73f8019d7751dcbb"
+  },
+  "screenshot_before": {
+    "available": true,
+    "path": "03e665d0b151-before.png"
+  },
+  "diagnosis": {
+    "cause": "The panel uses the obsolete 'app' label matcher; live telemetry responds to 'service'.",
+    "confidence": "likely",
+    "cause_status": "repair_verified",
+    "category": "label_schema_drift",
+    "reason": "Exactly one configured semantic label migration restores all visible panel queries and passes the panel contract.",
+    "prevention": [
+      "Test this panel query after exporter or collector changes.",
+      "Keep label migration policies aligned with the instrumentation contract.",
+      "Track source-sample freshness and expected service/environment dimensions."
+    ]
+  },
+  "advisor": {
+    "enabled": false,
+    "reason": "No model/key configured; evidence-based rules are active"
+  },
+  "events": [
+    {
+      "at": "2026-10-12T02:13:20.164+00:00",
+      "kind": "detected",
+      "body": {
+        "state": "empty",
+        "panel_id": 1
+      }
+    },
+    {
+      "at": "2026-10-12T02:13:22.836+00:00",
+      "kind": "evidence_captured",
+      "body": {
+        "screenshot": true
+      }
+    },
+    {
+      "at": "2026-10-12T02:13:22.863+00:00",
+      "kind": "diagnosed",
+      "body": {
+        "category": "label_schema_drift",
+        "executable_patch": true,
+        "model_used": false
+      }
+    },
+    {
+      "at": "2026-10-12T02:13:22.868+00:00",
+      "kind": "review_requested",
+      "body": {
+        "proposal_hash": "5e349154f634b12a42fbc3fa7efac87b49fc444be81af4be73f8019d7751dcbb"
+      }
+    },
+    {
+      "at": "2026-10-12T02:13:27.188+00:00",
+      "kind": "approved",
+      "body": {
+        "actor": "demo-reviewer",
+        "hash": "5e349154f634b12a42fbc3fa7efac87b49fc444be81af4be73f8019d7751dcbb",
+        "dashboard_version": 7,
+        "note": "Synthetic demo review: validated checkout service, production environment and live candidate results."
+      }
+    },
+    {
+      "at": "2026-10-12T02:13:27.214+00:00",
+      "kind": "patch_applied",
+      "body": {
+        "version": 8,
+        "ref_id": "A"
+      }
+    },
+    {
+      "at": "2026-10-12T02:13:32.959+00:00",
+      "kind": "recovery_verified",
+      "body": {
+        "actor": "demo-reviewer",
+        "reason": "Approved agent repair verified on three fresh evaluations",
+        "state": "healthy"
+      }
+    },
+    {
+      "at": "2026-10-12T02:13:32.966+00:00",
+      "kind": "rca_saved",
+      "body": {
+        "file": "03e665d0b151-rca.md"
+      }
+    }
+  ],
+  "approved_by": "demo-reviewer",
+  "approved_at": "2026-10-12T02:13:27.187+00:00",
+  "approval_note": "Synthetic demo review: validated checkout service, production environment and live candidate results.",
+  "applied_version": 8,
+  "screenshot_after": {
+    "available": true,
+    "path": "03e665d0b151-after.png"
+  },
+  "resolved_at": "2026-10-12T02:13:32.951+00:00",
+  "resolved_by": "demo-reviewer",
+  "resolution": "Approved agent repair verified on three fresh evaluations",
+  "verification": {
+    "state": "healthy",
+    "queries": [
+      {
+        "state": "healthy",
+        "series": 1,
+        "points": 1,
+        "labels": [
+          {
+            "__name__": "guardian_checkout_queue_depth",
+            "environment": "prod",
+            "instance": "127.0.0.1:9109",
+            "job": "checkout",
+            "service": "checkout"
+          }
+        ],
+        "last_timestamp_ms": 1791771209287,
+        "query": "guardian_checkout_queue_depth{service=\"checkout\",environment=\"prod\"}",
+        "ref_id": "A",
+        "from_ms": 1791770909287,
+        "to_ms": 1791771209287,
+        "datasource_uid": "guardian-prometheus"
+      }
+    ]
+  },
+  "recovered_dashboard_version": 8
+}

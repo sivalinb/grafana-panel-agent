@@ -1,0 +1,24 @@
+{
+  "grafana_url": "https://your-stack.grafana.net",
+  "data_dir": "data",
+  "tags": ["production"],
+  "contexts": {
+    "your-dashboard-uid": [{"service": "checkout", "environment": "prod"}]
+  },
+  "contracts": {
+    "your-dashboard-uid:1": {
+      "expect_data": true,
+      "min_series": 1,
+      "max_age_seconds": 120,
+      "owner": "Checkout team",
+      "expected_labels": [{"environment": "prod"}],
+      "freshness_selector": "your_gauge_metric{service=\"$service\",environment=\"$environment\"}"
+    },
+    "your-dashboard-uid:2": {"allow_empty": true, "owner": "Checkout team"}
+  },
+  "label_migrations": {},
+  "scan_interval_seconds": 60,
+  "consecutive_failures": 2,
+  "screenshot_mode": "playwright",
+  "demo": false
+}

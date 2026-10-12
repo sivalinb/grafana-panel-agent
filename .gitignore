@@ -1,0 +1,12 @@
+.runtime/
+data/
+.env
+.env.*
+!.env.example
+config.json
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+playwright-report/
+test-results/
